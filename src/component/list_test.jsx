@@ -13,7 +13,15 @@ class Counters extends Component {
      }
      renderTags(){
         if(this.state.Counters.length === 0) return <p className='ms_error'>this array empaty</p>
-        return <ul className='list_test_one'> {this.state.Counters.map(item=><li><Counter key={item.id} value={item.value}/></li>)} </ul>
+                return <div className='list_test_one'> 
+        {this.state.Counters.map(item=><div className='items_list_test_one'><Counter key={item.id} value={item.value}>
+        {/* props children type:elementHtml 
+        حيث يكون في الconsole(props: {children: 'titel'}) 
+        */}
+        <h4>titel</h4>
+        </Counter>
+        </div>)} 
+        </div>
      }
     render() { 
         return (
