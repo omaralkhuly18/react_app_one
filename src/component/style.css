@@ -8,8 +8,7 @@ body{
     display: flex;
     align-items: center;
 }
-li{
-    list-style: none;
+.items_list_test_one{
     display: flex;
     align-items: center;
     padding: 0 1%;
