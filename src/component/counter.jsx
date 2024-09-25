@@ -1,48 +1,50 @@
 import React, { Component } from 'react';
-import './style.css'
+import './style.css';
 
-class counter extends Component {
+class Counter extends Component {
     state = {
-        count: this.props.value,
-     }
-    render() {
-        return (
-            <React.Fragment>
-                <span  className={ this.classRender() }>{this.formatCount()}</span>
-                <button
-                // لوضع قيم داخل الداله الموجوده في event الموجود داخل كود الhtml
-                 onClick={() => this.handleIncrement({id:1})}
-                className='btn btn-primary btn-lg'>
-                   Increment
-                </button>
-            </React.Fragment>
-        );
-    }
-    // 1-fun => When you press the button containing that function, it starts increasing the numbers sequentially.
-    // 2-عند الضغط على الزر المحتوى على تلك الداله يبدأ بزيادة الأرقام تسلسليا
-    // 3-handleIncrement = () => لأن الthis الموجوده داخل الfun يجب الإشاره إلى أنها منفصله عن الthis الملحقه لل state
-    // 4-لوضع قيم داخل الداله الموجوده في event الموجود داخل كود الhtml
-    handleIncrement = (product) => {
-        // باستخدام setState لتزيد القيمة بمقدار 1 في كل مرة يتم الضغط على الزر.
-        this.setState({ count: this.state.count + 1 });
-        console.log('product')
+        count: this.props.counter.value,
     };
-    // fun => If the count is zero, it is the primary color, and if it is greater than zero, it changes color.
-    // إذا كان الكونت يساوي صفر فيكون باللون الأساسي وإذا زاد عن صفر فيغير اللون.
+
+    handleIncrement = () => {
+        this.setState({ count: this.state.count + 1 });
+    };
+
     classRender() {
         let classes = "num1 text-";
         classes += this.state.count === 0 ? "warning" : "primary";
         return classes;
     }
 
-    // fun => Convert zero number to word
-    // تحويل الصفر رقم إلى كلمه
-    formatCount(){
-        const{count}=this.state
-        return count=== 0?<span className='num1'>Zero</span>:count
+    formatCount() {
+        const { count } = this.state;
+        return count === 0 ? <span className='num1'>Zero</span> : count;
+    }
+
+    render() {
+        return (
+            <React.Fragment>
+                <h4>Counter #{this.props.counter.id}</h4> 
+                <span className={this.classRender()}>{this.formatCount()}</span>
+                <button
+                    onClick={this.handleIncrement}
+                    className='btn btn-primary btn-lg'
+                >
+                    Increment
+                </button>
+                <button 
+                    onClick={() => this.props.onDelete(this.props.counter.id)} 
+                    className='btn btn-danger btn-sm m-2'
+                >
+                    Delete
+                </button>
+            </React.Fragment>
+        );
     }
 }
-export default counter;
+
+export default Counter;
+
 
 // الفرق الأساسي هنا:
 // استخدام useState:
