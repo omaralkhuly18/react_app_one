@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import "./style.css";
-import Counter from "./counter"; // Updated filename
+import Counter from "./counter"; // يجب أن يكون اسم الملف Counter بالحروف الكبيرة
 
 class Counters extends Component {
   state = {
@@ -24,11 +24,11 @@ class Counters extends Component {
     return (
       <div className="list_test_one">
         {this.state.countersList.map((item) => (
-          <div className="items_list_test_one">
+          <div className="items_list_test_one" key={item.id}>
             <Counter
-              key={item.id}
-              onDelete={this.handleDelete} // Updated name
-                counter={item}
+              onDelete={this.handleDelete} 
+              handleIncrement={this.handleIncrement} // تم تمرير دالة increment
+              counter={item}
             />
           </div>
         ))}
@@ -36,14 +36,38 @@ class Counters extends Component {
     );
   }
 
+  handleIncrement = (counter) => {
+    const countersList = [...this.state.countersList];
+    const index = countersList.indexOf(counter); // تصحيح الاسم إلى indexOf
+    countersList[index] = { ...counter };
+    countersList[index].value++; // زيادة القيمة
+    this.setState({ countersList }); // تحديث state
+  };
+
+  handleRest = () => {
+    const countersList = this.state.countersList.map((c) => {
+      c.value = 0; // إعادة تعيين جميع القيم إلى 0
+      return c;
+    });
+    this.setState({ countersList });
+  };
+
   handleDelete = (counterId) => {
-    const countersList = this.state.countersList.filter((c) => c.id !== counterId);
+    const countersList = this.state.countersList.filter(
+      (c) => c.id !== counterId
+    );
     this.setState({ countersList });
   };
 
   render() {
     return (
       <React.Fragment>
+        <button
+          onClick={this.handleRest} // تم إصلاح إعادة تعيين القيم
+          className="btn btn-primary btn-lg m-2"
+        >
+          Reset
+        </button>
         <br></br>
         {this.state.countersList.length === 0 && (
           <p className="ms_error">This array is empty</p>

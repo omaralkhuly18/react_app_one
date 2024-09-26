@@ -2,23 +2,15 @@ import React, { Component } from 'react';
 import './style.css';
 
 class Counter extends Component {
-    state = {
-        count: this.props.counter.value,
-    };
-
-    handleIncrement = () => {
-        this.setState({ count: this.state.count + 1 });
-    };
-
     classRender() {
         let classes = "num1 text-";
-        classes += this.state.count === 0 ? "warning" : "primary";
+        classes += this.props.counter.value === 0 ? "warning" : "primary"; // تغيير اللون حسب القيمة
         return classes;
     }
 
     formatCount() {
-        const { count } = this.state;
-        return count === 0 ? <span className='num1'>Zero</span> : count;
+        const { value } = this.props.counter;
+        return value === 0 ? <span className='num1'>Zero</span> : value; // عرض "Zero" إذا كانت القيمة 0
     }
 
     render() {
@@ -27,7 +19,7 @@ class Counter extends Component {
                 <h4>Counter #{this.props.counter.id}</h4> 
                 <span className={this.classRender()}>{this.formatCount()}</span>
                 <button
-                    onClick={this.handleIncrement}
+                    onClick={() => this.props.handleIncrement(this.props.counter)} // يجب تغليفه في دالة سهمية لتجنب التنفيذ الفوري
                     className='btn btn-primary btn-lg'
                 >
                     Increment
@@ -44,6 +36,7 @@ class Counter extends Component {
 }
 
 export default Counter;
+
 
 
 // الفرق الأساسي هنا:
